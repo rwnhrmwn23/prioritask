@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:injectable/injectable.dart';
@@ -63,23 +64,46 @@ class NotificationService {
     required String body,
     required DateTime scheduledTime,
   }) async {
-    await _notificationsPlugin.zonedSchedule(
-      id,
-      title,
-      body,
-      tz.TZDateTime.from(scheduledTime, tz.local),
-      const NotificationDetails(
-        android: AndroidNotificationDetails(
-          'reminder_channel',
-          'Reminders',
-          channelDescription: 'Channel for reminder notifications',
-          importance: Importance.max,
-          priority: Priority.high,
+    final now = DateTime.now();
+
+    tz.TZDateTime tzScheduledDate = tz.TZDateTime.from(scheduledTime, tz.local);
+
+    if (scheduledTime.isBefore(now)) {
+      if (now.difference(scheduledTime).inMinutes < 5) {
+        tzScheduledDate = tz.TZDateTime.now(
+          tz.local,
+        ).add(const Duration(seconds: 2));
+      } else {
+        return;
+      }
+    }
+
+    try {
+      debugPrint('Scheduling notification ID: $id at $tzScheduledDate');
+      await _notificationsPlugin.zonedSchedule(
+        id,
+        title,
+        body,
+        tzScheduledDate,
+        const NotificationDetails(
+          android: AndroidNotificationDetails(
+            'reminder_channel',
+            'Reminders',
+            channelDescription: 'Channel for reminder notifications',
+            importance: Importance.max,
+            priority: Priority.high,
+          ),
+          iOS: DarwinNotificationDetails(
+            presentAlert: true,
+            presentBadge: true,
+            presentSound: true,
+          ),
         ),
-        iOS: DarwinNotificationDetails(),
-      ),
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-    );
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      );
+    } catch (e) {
+      debugPrint('Error scheduling notification: $e');
+    }
   }
 
   Future<void> cancelNotification(int id) async {

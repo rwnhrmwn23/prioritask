@@ -29,7 +29,9 @@ class ReminderBloc extends Bloc<ReminderEvent, ReminderState> {
     LoadRemindersEvent event,
     Emitter<ReminderState> emit,
   ) async {
-    emit(ReminderLoading());
+    if (state is! ReminderLoaded) {
+      emit(ReminderLoading());
+    }
     try {
       final reminders = await _getRemindersUseCase.execute();
       emit(ReminderLoaded(reminders));
@@ -42,7 +44,6 @@ class ReminderBloc extends Bloc<ReminderEvent, ReminderState> {
     AddReminderEvent event,
     Emitter<ReminderState> emit,
   ) async {
-    emit(ReminderLoading());
     try {
       await _addReminderUseCase.execute(event.reminder);
       add(LoadRemindersEvent());
@@ -55,7 +56,6 @@ class ReminderBloc extends Bloc<ReminderEvent, ReminderState> {
     DeleteReminderEvent event,
     Emitter<ReminderState> emit,
   ) async {
-    emit(ReminderLoading());
     try {
       await _deleteReminderUseCase.execute(event.id);
       add(LoadRemindersEvent());

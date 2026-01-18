@@ -4,5 +4,6 @@
         "**/*.freezed.dart": true,
         "**/*.config.dart": true,
         "**/*.isar.dart": true
-    }
+    },
+    "java.configuration.updateBuildConfiguration": "interactive"
 }

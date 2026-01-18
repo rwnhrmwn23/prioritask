@@ -3,35 +3,40 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AppStyle {
   // Colors
-  static const Color primaryColor = Color(0xFF6200EE);
-  static const Color secondaryColor = Color(0xFF03DAC6);
+  static const Color primaryColor = Color(0xFFFF7171);
+  static const Color secondaryColor = Color(0xFFFFF7F6);
   static const Color backgroundColor = Color(0xFFF5F5F5);
   static const Color surfaceColor = Colors.white;
   static const Color errorColor = Color(0xFFB00020);
 
   static const Color textPrimary = Color(0xFF000000);
   static const Color textSecondary = Color(0xFF757575);
+  static const Color textHint = Color(0xFFBDBDBD);
+
+  // UI Colors
+  static const Color white = Colors.white;
+  static const Color black = Colors.black;
+  static const Color transparent = Colors.transparent;
+  static const Color grey = Colors.grey;
+  static Color grey300 = Colors.grey.shade300;
+  static Color grey200 = Colors.grey.shade200;
+  static Color grey600 = Colors.grey.shade600;
+
+  // Priority Colors
+  static Color priorityHighBg = Colors.red.shade100;
+  static Color priorityHighText = Colors.red.shade700;
+  static Color priorityMediumBg = Colors.orange.shade100;
+  static Color priorityMediumText = Colors.orange.shade700;
+  static Color priorityLowBg = Colors.blue.shade100;
+  static Color priorityLowText = Colors.blue.shade700;
+  static Color priorityTodoBg = Colors.grey.shade200;
+  static Color priorityTodoText = Colors.grey.shade700;
+
+  static const Color successGreen = Colors.green;
+  static Color successGreenBg = Colors.green.shade100;
 
   // Text Styles
-  static TextStyle get displayLarge => GoogleFonts.poppins(
-    fontSize: 57,
-    fontWeight: FontWeight.w400,
-    color: textPrimary,
-  );
-
-  static TextStyle get displayMedium => GoogleFonts.poppins(
-    fontSize: 45,
-    fontWeight: FontWeight.w400,
-    color: textPrimary,
-  );
-
-  static TextStyle get headlineLarge => GoogleFonts.poppins(
-    fontSize: 32,
-    fontWeight: FontWeight.w700,
-    color: textPrimary,
-  );
-
-  static TextStyle get headlineMedium => GoogleFonts.poppins(
+  static TextStyle get headlineMedium => GoogleFonts.buda(
     fontSize: 28,
     fontWeight: FontWeight.w600,
     color: textPrimary,
@@ -67,7 +72,13 @@ class AppStyle {
     color: textPrimary,
   );
 
-  // Theme Data factory
+  static TextStyle get priorityLabel => GoogleFonts.buda(
+    fontSize: 14,
+    fontWeight: FontWeight.bold,
+    color: textPrimary,
+  );
+
+  // Theme Data
   static ThemeData get lightTheme {
     return ThemeData(
       useMaterial3: true,
@@ -80,9 +91,6 @@ class AppStyle {
       ),
       scaffoldBackgroundColor: backgroundColor,
       textTheme: TextTheme(
-        displayLarge: displayLarge,
-        displayMedium: displayMedium,
-        headlineLarge: headlineLarge,
         headlineMedium: headlineMedium,
         titleLarge: titleLarge,
         titleMedium: titleMedium,

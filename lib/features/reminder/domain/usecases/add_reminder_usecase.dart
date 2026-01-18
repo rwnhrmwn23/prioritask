@@ -13,11 +13,15 @@ class AddReminderUseCase {
   Future<void> execute(Reminder reminder) async {
     final int id = await _repository.addReminder(reminder);
 
-    await _notificationService.scheduleNotification(
-      id: id,
-      title: 'Reminder',
-      body: reminder.title,
-      scheduledTime: reminder.reminderTime,
-    );
+    if (reminder.isCompleted) {
+      await _notificationService.cancelNotification(id);
+    } else {
+      await _notificationService.scheduleNotification(
+        id: id,
+        title: 'Reminder',
+        body: reminder.title,
+        scheduledTime: reminder.reminderTime,
+      );
+    }
   }
 }

@@ -1,5 +1,6 @@
 import 'package:isar/isar.dart';
 import '../../domain/entities/reminder.dart';
+import '../../domain/entities/priority.dart';
 
 part 'reminder_model.g.dart';
 
@@ -13,12 +14,16 @@ class ReminderModel {
 
   bool isCompleted = false;
 
+  @Enumerated(EnumType.name)
+  late Priority priority;
+
   Reminder toEntity() {
     return Reminder(
       id: id,
       title: title,
       reminderTime: reminderTime,
       isCompleted: isCompleted,
+      priority: priority,
     );
   }
 
@@ -26,7 +31,8 @@ class ReminderModel {
     final model = ReminderModel()
       ..title = reminder.title
       ..reminderTime = reminder.reminderTime
-      ..isCompleted = reminder.isCompleted;
+      ..isCompleted = reminder.isCompleted
+      ..priority = reminder.priority;
 
     if (reminder.id != null) {
       model.id = reminder.id!;

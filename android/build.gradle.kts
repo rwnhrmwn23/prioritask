@@ -17,6 +17,19 @@ subprojects {
 }
 subprojects {
     project.evaluationDependsOn(":app")
+    
+    afterEvaluate {
+        if (project.extensions.findByName("android") != null) {
+            try {
+                val android = project.extensions.getByName("android") as com.android.build.gradle.BaseExtension
+                if (android.namespace == null) {
+                    android.namespace = project.group.toString()
+                }
+            } catch (e: Exception) {
+                // Ignore if class not found or other issues
+            }
+        }
+    }
 }
 
 tasks.register<Delete>("clean") {
