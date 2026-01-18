@@ -113,8 +113,7 @@ class _ToDoPageState extends State<ToDoPage> {
                                 value: context.read<ReminderBloc>(),
                                 child: AddReminderModal(
                                   initialPriority: Priority.none,
-                                  initialDate:
-                                      _selectedDate,
+                                  initialDate: _selectedDate,
                                 ),
                               ),
                             );

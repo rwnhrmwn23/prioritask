@@ -1,3 +1,20 @@
+subprojects {
+    afterEvaluate {
+        val android = project.extensions.findByName("android")
+        if (android != null) {
+            try {
+                val getNamespace = android.javaClass.getMethod("getNamespace")
+                if (getNamespace.invoke(android) == null) {
+                    val setNamespace = android.javaClass.getMethod("setNamespace", String::class.java)
+                    setNamespace.invoke(android, project.group.toString())
+                }
+            } catch (e: Exception) {
+                // If the method doesn't exist or fails, just ignore
+            }
+        }
+    }
+}
+
 allprojects {
     repositories {
         google()
@@ -17,19 +34,6 @@ subprojects {
 }
 subprojects {
     project.evaluationDependsOn(":app")
-    
-    afterEvaluate {
-        if (project.extensions.findByName("android") != null) {
-            try {
-                val android = project.extensions.getByName("android") as com.android.build.gradle.BaseExtension
-                if (android.namespace == null) {
-                    android.namespace = project.group.toString()
-                }
-            } catch (e: Exception) {
-                // Ignore if class not found or other issues
-            }
-        }
-    }
 }
 
 tasks.register<Delete>("clean") {
