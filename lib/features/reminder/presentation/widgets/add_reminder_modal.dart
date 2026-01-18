@@ -101,17 +101,19 @@ class _AddReminderModalState extends State<AddReminderModal> {
             children: [
               _buildPriorityBadge(),
               if (_isEditing)
-                IconButton(
-                  icon: const Icon(
-                    Icons.delete_outline,
-                    color: AppStyle.primaryColor,
+                Expanded(
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.delete_outline,
+                      color: AppStyle.primaryColor,
+                    ),
+                    onPressed: () {
+                      context.read<ReminderBloc>().add(
+                        DeleteReminderEvent(widget.reminder!.id!),
+                      );
+                      Navigator.pop(context);
+                    },
                   ),
-                  onPressed: () {
-                    context.read<ReminderBloc>().add(
-                      DeleteReminderEvent(widget.reminder!.id!),
-                    );
-                    Navigator.pop(context);
-                  },
                 ),
             ],
           ),
