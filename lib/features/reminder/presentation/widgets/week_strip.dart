@@ -28,18 +28,51 @@ class _WeekStripState extends State<WeekStrip> {
 
   @override
   Widget build(BuildContext context) {
+    final weekMonth = _startDate.add(const Duration(days: 3));
+
     return Column(
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                DateFormat('MMMM yyyy').format(widget.selectedDate),
-                style: AppStyle.titleLarge,
+              Row(
+                children: [
+                  Text(
+                    DateFormat('MMMM yyyy').format(weekMonth),
+                    style: AppStyle.titleLarge,
+                  ),
+                  const SizedBox(width: 4),
+                  const Icon(Icons.calendar_today, size: 20),
+                ],
               ),
-              const SizedBox(width: 4),
-              const Icon(Icons.calendar_today, size: 20),
+              Row(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        _startDate = _startDate.subtract(
+                          const Duration(days: 7),
+                        );
+                      });
+                    },
+                    icon: const Icon(Icons.chevron_left),
+                    padding: EdgeInsets.zero,
+                    visualDensity: VisualDensity.compact,
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        _startDate = _startDate.add(const Duration(days: 7));
+                      });
+                    },
+                    icon: const Icon(Icons.chevron_right),
+                    padding: EdgeInsets.zero,
+                    visualDensity: VisualDensity.compact,
+                  ),
+                ],
+              ),
             ],
           ),
         ),
