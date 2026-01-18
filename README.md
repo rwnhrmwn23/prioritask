@@ -96,6 +96,10 @@ We use **flutter_bloc** to separate business logic from UI. This ensures:
 ### Notification Reminder
 <img width="240" height="780" alt="Push Notification" src="https://github.com/user-attachments/assets/f4678b81-89fb-4264-a3a3-8aa68ec54b7e" />
 
+### Screen Record Realtime DB with Isar
+https://github.com/user-attachments/assets/7577961c-804c-4bd7-a109-c5980c0193ec
+
+
 ## 🧪 Testing
 
 Unit tests cover the core business logic (Domain Layer) and State Management (BLoC).
